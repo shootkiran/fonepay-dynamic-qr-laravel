@@ -10,6 +10,7 @@ You can install this package via Composer:
 composer require shootkiran/fonepay-dynamic-qr-laravel
 
 ## Usage
+
 ```sh
 FonePayQR::generate(100, 'Order123', 'Test Payment', 'PRN123');
 
