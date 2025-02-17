@@ -3,18 +3,16 @@
 namespace ShootKiran\DynamicQrGeneratorFonepay;
 
 use Illuminate\Support\Facades\Http;
-
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class FonePayQR
 {
-    protected $config;
-
-    public function __construct()
+    protected static function getConfig()
     {
-        $this->config = config('fonepay');
+        return config('fonepay');
     }
 
-    public function generate(
+    public static function generate(
         $amount,
         $remarks1,
         $remarks2,
@@ -26,31 +24,18 @@ class FonePayQR
         $taxAmount = null,
         $taxRefund = null
     ) {
-        $url = $this->config['fonepay_dynamicqr_url'] . '/thirdPartyDynamicQrDownload';
-        if (is_null($merchantCode)) {
-            $merchantCode = $this->config('fonepay_dynamicqr_merchantcode');
-            if ($merchantCode == "") {
-                throw new \Exception("Fonepay Merchant Code is Missing");
-            }
+        $config = self::getConfig();
+        $url = $config['fonepay_dynamicqr_url'] . '/thirdPartyDynamicQrDownload';
+
+        $merchantCode = $merchantCode ?? $config['fonepay_dynamicqr_merchantcode'] ?? null;
+        $username = $username ?? $config['fonepay_dynamicqr_username'] ?? null;
+        $password = $password ?? $config['fonepay_dynamicqr_password'] ?? null;
+        $secret_key = $secret_key ?? $config['fonepay_dynamicqr_secret'] ?? null;
+
+        if (!$merchantCode || !$username || !$password || !$secret_key) {
+            throw new \Exception("Fonepay credentials are missing.");
         }
-        if (is_null($username)) {
-            $username = $this->config('fonepay_dynamicqr_username');
-            if ($username == "") {
-                throw new \Exception("Fonepay Username is Missing");
-            }
-        }
-        if (is_null($password)) {
-            $password = $this->config('fonepay_dynamicqr_password');
-            if ($password == "") {
-                throw new \Exception("Fonepay Password is Missing");
-            }
-        }
-        if (is_null($secret_key)) {
-            $secret_key = $this->config('fonepay_dynamicqr_secret');
-            if ($secret_key == "") {
-                throw new \Exception("Fonepay Secret is Missing");
-            }
-        }
+
         $data_to_hash = "$amount,$prn,$merchantCode,$remarks1,$remarks2";
         $dataValidation = hash_hmac('sha512', $data_to_hash, $secret_key);
 
@@ -66,12 +51,19 @@ class FonePayQR
         ];
 
         $response = Http::post($url, $data)->object();
+        if ($response->success) {
+            $qrmessage = $response->qrMessage;
+            $requested_date = $response->requested_date;
+            return QrCode::size('400')->generate($qrmessage);
+        }
         return isset($response->success) ? $response : false;
     }
 
-    public function verify($prn, $merchantCode, $username, $password, $secret_key)
+    public static function verify($prn, $merchantCode, $username, $password, $secret_key)
     {
-        $url = $this->config['api_url'] . '/thirdPartyDynamicQrGetStatus';
+        $config = self::getConfig();
+        $url = $config['fonepay_dynamicqr_url'] . '/thirdPartyDynamicQrGetStatus';
+
         $data_to_hash = "$prn,$merchantCode";
         $dataValidation = hash_hmac('sha512', $data_to_hash, $secret_key);
 
