@@ -1,0 +1,30 @@
+{
+    "name": "shootkiran/fonepay-dynamic-qr-laravel",
+    "description": "Simple Dynamic QR Generator for Fonepay System in Nepal",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kiran Shrestha",
+            "email": "shootkiran@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "ShootKiran\\DynamicQrGeneratorFonepay\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "simplesoftwareio/simple-qrcode": "^0.0.4@beta"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ShootKiran\\DynamicQrGeneratorFonepay\\FonePayQRServiceProvider"
+            ],
+            "aliases": {
+                "FonePayQR": "ShootKiran\\DynamicQrGeneratorFonepay\\Facades\\FonePayQR"
+            }
+        }
+    }
+}
