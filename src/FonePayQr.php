@@ -21,8 +21,9 @@ class FonePayQR
         $username = null,
         $password = null,
         $secret_key = null,
+        $qrSize = "400",
         $taxAmount = null,
-        $taxRefund = null
+        $taxRefund = null,
     ) {
         $config = self::getConfig();
         $url = $config['fonepay_dynamicqr_url'] . '/thirdPartyDynamicQrDownload';
@@ -49,12 +50,11 @@ class FonePayQR
             "username" => $username,
             "password" => $password
         ];
-
         $response = Http::post($url, $data)->object();
         if ($response->success) {
             $qrmessage = $response->qrMessage;
             $requested_date = $response->requested_date;
-            return QrCode::size('400')->generate($qrmessage);
+            return QrCode::size($qrSize)->generate($qrmessage);
         }
         return isset($response->success) ? $response : false;
     }
