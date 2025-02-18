@@ -24,6 +24,6 @@ class FonePayQRServiceProvider extends ServiceProvider
             __DIR__ . '/../config/fonepay.php' => config_path('fonepay.php'),
         ], 'config');
         // Load package migrations
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
     }
 }
