@@ -15,7 +15,8 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "simplesoftwareio/simple-qrcode": "^4.2"
+        "simplesoftwareio/simple-qrcode": "^4.2",
+        "filament/filament": "*"
     },
     "extra": {
         "laravel": {
