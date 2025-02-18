@@ -4,6 +4,7 @@ namespace ShootKiran\FonepayDynamicQrLaravel\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use ShootKiran\FonepayDynamicQrLaravel\Enums\FonepayDynamicQrStatus;
 
 class FonepayDynamicQr extends Model
 {
@@ -22,5 +23,6 @@ class FonepayDynamicQr extends Model
 
     protected $casts = [
         'verified_at' => 'datetime',
+        'status' => FonepayDynamicQrStatus::class,
     ];
 }
