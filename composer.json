@@ -25,7 +25,7 @@
                 "ShootKiran\\DynamicQrGeneratorFonepay\\FonePayQRServiceProvider"
             ],
             "aliases": {
-                "FonePayQR": "ShootKiran\\DynamicQrGeneratorFonepay\\Facades\\FonePayQR"
+                "FonepayDynamicQr": "ShootKiran\\DynamicQrGeneratorFonepay\\Facades\\FonepayDynamicQr"
             }
         }
     }

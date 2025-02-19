@@ -13,10 +13,21 @@ return new class extends Migration {
             $table->decimal('amount', 10, 2);
             $table->string('remarks1')->nullable();
             $table->string('remarks2')->nullable();
-            $table->string('merchant_code');
-            $table->string('qr_code_url')->nullable();
             $table->enum('status', ['pending', 'success', 'failed'])->default('pending');
             $table->timestamp('verified_at')->nullable();
+
+            $table->string('username');
+            $table->string('password');
+            $table->string('secretKey');
+            $table->string('merchantCode');
+
+            $table->text('fonepay_qrMessage')->nullable();
+            $table->string('fonepay_status')->nullable();
+            $table->string('fonepay_message')->nullable(); //if error
+            $table->date('fonepay_requested_date')->nullable();
+            $table->text('fonepay_merchantWebSocketUrl')->nullable();
+            $table->text('fonepay_thirdpartyQrWebSocketUrl')->nullable();
+
             $table->timestamps();
         });
     }

@@ -1,19 +1,19 @@
 <?php
 
-namespace ShootKiran\FonepayDynamicQrLaravel\Enums;
+namespace ShootKiran\DynamicQrGeneratorFonepay\Enums;
 
 use Filament\Support\Contracts\HasLabel;
 use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasColor;
 
 
-enum FonepayDynamicQrStatus: string implements HasLabel,HasIcon,HasColor
+enum FonepayStatus: string implements HasLabel, HasIcon, HasColor
 {
     case PENDING = 'pending';
     case SUCCESS = 'success';
     case FAILED = 'failed';
     public function getLabel(): ?string
-    {   
+    {
         return match ($this) {
             self::PENDING => 'Pending',
             self::SUCCESS => 'Success',

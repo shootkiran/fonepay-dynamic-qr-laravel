@@ -3,6 +3,7 @@
 namespace ShootKiran\DynamicQrGeneratorFonepay;
 
 use Illuminate\Support\ServiceProvider;
+use ShootKiran\DynamicQrGeneratorFonepay\Facades\FonepayDynamicQr;
 
 class FonePayQRServiceProvider extends ServiceProvider
 {
@@ -10,11 +11,11 @@ class FonePayQRServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/fonepay.php', 'fonepay');
 
-        $this->app->singleton(FonePayQR::class, function ($app) {
-            return new FonePayQR();
+        $this->app->singleton(FonepayDynamicQr::class, function ($app) {
+            return new FonepayDynamicQr();
         });
 
-        $this->app->alias(FonePayQR::class, 'fonepayqr');
+        $this->app->alias(FonepayDynamicQr::class, 'fonepaydynamicqr');
     }
 
     public function boot()
