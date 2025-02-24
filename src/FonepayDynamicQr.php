@@ -146,5 +146,6 @@ class FonepayDynamicQr extends Model
                 'verified_at' => now(),
             ]);
         }
+        return $this;
     }
 }
